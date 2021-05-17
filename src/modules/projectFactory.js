@@ -1,9 +1,13 @@
+import pubsub from "./pubsub";
 const projectFactory = (title, description, priority) => {
+  const MAX_ID_NUMBER = 999999;
+  const randomID = Math.floor(Math.random() * MAX_ID_NUMBER);
   const project = {
     title,
     description,
     priority,
     completed: false,
+    id: `projID${randomID}`,
     tasks: [],
   };
   const proto = {
@@ -21,6 +25,14 @@ const projectFactory = (title, description, priority) => {
     },
     getTasks() {
       return this.tasks;
+    },
+    checkCompleted() {
+      const completedTasks = tasks.sort((task) => {
+        return task.isDone;
+      });
+      if (tasks.lenght === completedTasks.lenght) {
+        this.completed = true;
+      }
     },
   };
   return Object.assign(Object.create(proto), project);
