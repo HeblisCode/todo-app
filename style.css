@@ -1,0 +1,260 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Mono&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+:root {
+  --mainColor: white;
+  --secColor: #f6f6f6;
+  --secDarkColor: #e2e2e2;
+  --accColor: #3da100;
+  --textColor: black;
+}
+html {
+  height: 100%;
+  width: 100%;
+  font-size: 50%;
+}
+body {
+  display: grid;
+  grid-template-columns: minmax(50rem, 1fr) 4fr;
+  grid-template-rows: 14.8rem 1fr 3.4rem;
+  height: 100%;
+  width: 100%;
+  font-family: "PT Mono", monospace;
+}
+@media (max-width: 767px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px 1fr 30px;
+  }
+}
+/*NAV BAR STYLING*********************************************************************/
+header {
+  background-color: var(--accColor);
+  grid-column: span 2;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+  color: var(--mainColor);
+}
+header > h1 {
+  font-size: 6.4rem;
+}
+header > button {
+  display: none;
+}
+@media (max-width: 767px) {
+  header > button {
+    display: block;
+  }
+}
+/*SIDEBAR STYLING********************************************************************/
+nav {
+  background-color: var(--secColor);
+  padding: 3rem;
+  overflow-y: scroll;
+}
+nav > form {
+  height: auto;
+  overflow: hidden;
+  transition: all 1s;
+}
+@media (max-width: 767px) {
+  nav {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    padding-top: 8rem;
+  }
+  .sidebarActive {
+    display: flex;
+  }
+}
+nav > h2 {
+  font-size: 4rem;
+  text-align: center;
+}
+.projectNav {
+  background-color: var(--secDarkColor);
+  height: 7rem;
+  margin-top: 3rem;
+  border-radius: 3.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  color: var(--textColor);
+}
+.projectNav > p,
+.projectNav > span {
+  font-size: 2.4rem;
+}
+.projectNavActive {
+  background-color: var(--accColor);
+  color: white;
+}
+.projectNav:hover {
+  -webkit-box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
+  transform: scale(1.01);
+  cursor: pointer;
+}
+.projectNav > span:hover {
+  transform: scale(1.3);
+}
+#addProject {
+  background-color: var(--accColor);
+  color: var(--mainColor);
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin: auto;
+  margin-top: 3rem;
+}
+#addProject:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
+  transform: scale(1.2);
+}
+
+/*/
+/*/
+/*MAIN STYLING***********************************************************************/
+main {
+  background-color: var(--mainColor);
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 8rem auto;
+}
+@media (max-width: 767px) {
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+}
+/*****************************MAIN HEAD CONTAINER*********************************/
+#mainHeader {
+  grid-column: span 2;
+  border-bottom: solid black 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#mainHeader > h2 {
+  font-size: 6.4rem;
+}
+#mainButtons {
+  display: flex;
+}
+#mainButtons > span {
+  background-color: var(--accColor);
+  color: var(--mainColor);
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin-left: 1.5rem;
+}
+#mainButtons > span:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
+  transform: scale(1.2);
+}
+/*****************************MAIN DESC CONTAINER*********************************/
+#mainDescription {
+  padding: 0 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+}
+#mainDescription h3 {
+  font-size: 4rem;
+  margin-top: 3rem;
+}
+#mainDescription p {
+  font-size: 2rem;
+  text-align: justify;
+  padding: 2rem 4rem;
+  color: var(--mainColor);
+  background-color: var(--accColor);
+  border-radius: 2rem;
+  margin-top: 3rem;
+}
+/*****************************MAIN TASK CONTAINER*********************************/
+#mainTasks {
+  padding: 0 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+}
+#mainTasks > h3 {
+  font-size: 4rem;
+  margin-top: 3rem;
+}
+#tasksContainer {
+  width: 100%;
+  height: 100%;
+}
+.task {
+  margin-top: 2rem;
+  background-color: var(--secColor);
+  height: 5rem;
+  font-size: 2rem;
+  border-radius: 2.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+.taskContent {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-evenly;
+}
+.taskCompleted {
+  background-color: var(--accColor);
+  color: var(--mainColor);
+}
+.taskCompleted > .taskContent {
+  text-decoration: line-through;
+}
+
+/*/
+/*/
+/*FOOTER STYLING********************************************************************/
+footer {
+  background-color: var(--accColor);
+  grid-column: span 2;
+}
+/*CHECKBOXES************************************************************************/
+.checkbox {
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 50%;
+}
+.checkboxActive {
+  background-color: teal;
+}
