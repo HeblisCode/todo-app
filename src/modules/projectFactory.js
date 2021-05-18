@@ -1,4 +1,4 @@
-import pubsub from "./pubsub";
+import taskFactory from "./taskFactory";
 const projectFactory = (title, description, priority) => {
   const MAX_ID_NUMBER = 999999;
   const randomID = Math.floor(Math.random() * MAX_ID_NUMBER);
@@ -8,7 +8,7 @@ const projectFactory = (title, description, priority) => {
     priority,
     completed: false,
     id: `projID${randomID}`,
-    tasks: [],
+    tasks: [taskFactory("test", "domani"), taskFactory("test2", "dopo domani")],
   };
   const proto = {
     pushTask(task) {

@@ -139,7 +139,7 @@ main {
   padding: 3rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 8rem auto;
+  grid-template-rows: fit-content(1rem) auto;
 }
 @media (max-width: 767px) {
   main {
@@ -154,6 +154,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  align-self: center;
 }
 #mainHeader > h2 {
   font-size: 6.4rem;
@@ -198,7 +199,7 @@ main {
   color: var(--mainColor);
   background-color: var(--accColor);
   border-radius: 2rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 /*****************************MAIN TASK CONTAINER*********************************/
 #mainTasks {
@@ -231,7 +232,8 @@ main {
 .taskContent {
   flex-grow: 1;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin: 0 2rem;
 }
 .taskCompleted {
   background-color: var(--accColor);

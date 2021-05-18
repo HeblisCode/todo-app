@@ -3,7 +3,6 @@ import taskFactory from "./modules/taskFactory";
 import pubsub from "./modules/pubsub";
 import view from "./modules/view";
 
-pubsub.subscribe("todoDataChanged", deleteSecond);
 todo.addProject(
   "test1",
   "adsoifhsduioghasfiuoghsdifhusidghsuighdsgushsaduighsuig",
