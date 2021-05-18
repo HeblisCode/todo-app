@@ -6,15 +6,15 @@ import view from "./modules/view";
 todo.addProject(
   "test1",
   "adsoifhsduioghasfiuoghsdifhusidghsuighdsgushsaduighsuig",
-  "4"
+  "1"
 );
 todo.addProject(
   "test2",
   "adsoifhsduioghasfiuoghsdifhusidghsuighdsgushsaduighsuig",
-  "4"
+  "3"
 );
 todo.addProject(
   "test3",
   "adsoifhsduioghasfiuoghsdifhusidghsuighdsgushsaduighsuig",
-  "4"
+  "2"
 );

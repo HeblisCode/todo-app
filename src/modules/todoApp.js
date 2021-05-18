@@ -1,6 +1,7 @@
 import taskFactory from "./taskFactory";
 import projectFactory from "./projectFactory";
 import pubsub from "./pubsub";
+import createNavBarProject from "./HTMLGenerators/createNavBar";
 
 const todo = (function () {
   const projects = [];
@@ -66,8 +67,6 @@ const todo = (function () {
 
   return {
     addProject,
-    deleteProject,
-    deleteTask,
   };
 })();
 

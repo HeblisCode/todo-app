@@ -59,14 +59,9 @@ nav {
   padding: 3rem;
   overflow-y: scroll;
 }
-nav > form {
-  height: auto;
-  overflow: hidden;
-  transition: all 1s;
-}
 @media (max-width: 767px) {
   nav {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     position: fixed;
@@ -74,9 +69,12 @@ nav > form {
     width: 100vw;
     z-index: 1;
     padding-top: 8rem;
+    transition: 0.3s;
+    transform: translate(100%, 0);
+    overflow-y: auto;
   }
-  .sidebarActive {
-    display: flex;
+  .navBarActive {
+    transform: translate(0, 0);
   }
 }
 nav > h2 {
@@ -87,7 +85,7 @@ nav > h2 {
   background-color: var(--secDarkColor);
   height: 7rem;
   margin-top: 3rem;
-  border-radius: 3.8rem;
+  border-radius: 3.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -130,7 +128,49 @@ nav > h2 {
   box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
   transform: scale(1.2);
 }
-
+nav > form {
+  background-color: var(--accColor);
+  height: 0;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3rem;
+  overflow: hidden;
+}
+nav > form > input {
+  width: 100%;
+  border: none;
+  height: 5rem;
+  margin: 3rem 0;
+  font-size: 2.4rem;
+  padding-left: 1rem;
+  border-radius: 1rem;
+  font-family: "PT Mono", monospace;
+}
+nav > form > div {
+  margin-bottom: 3rem;
+}
+nav > form > div > button {
+  box-sizing: content-box;
+  border: none;
+  height: 4rem;
+  width: 10rem;
+  border-radius: 1rem;
+  font-family: "PT Mono", monospace;
+  background-color: var(--mainColor);
+  padding: 0.3rem;
+  margin: 0 1rem;
+}
+nav > form > div > button:hover {
+  background-color: var(--secColor);
+  cursor: pointer;
+}
+.formActive {
+  margin-top: 3rem;
+  height: auto;
+}
 /*/
 /*/
 /*MAIN STYLING***********************************************************************/
