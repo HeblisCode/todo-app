@@ -18,8 +18,8 @@ const todo = (function () {
     }
   }
 
-  function addProject(title, description, priority) {
-    const newProject = projectFactory(title, description, priority);
+  function addProject(title) {
+    const newProject = projectFactory(title, "", "");
     projects.push(newProject);
     pubsub.publish("todoDataChanged", projects);
   }
@@ -73,6 +73,7 @@ const todo = (function () {
 
   function restoreFromData(obj) {}
 
+  pubsub.subscribe("addProject", addProject);
   pubsub.subscribe("deleteProject", deleteProject);
   pubsub.subscribe("deleteTask", deleteTask);
   pubsub.subscribe("completeTask", completeTask);

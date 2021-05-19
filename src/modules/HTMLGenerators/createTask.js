@@ -36,7 +36,7 @@ function createEditForm(project, task) {
     pubsub.publish("editTask", {
       project: project,
       taskId: task.id,
-      name: task.value,
+      name: task.name,
       date: task.date,
     });
   });
