@@ -8,7 +8,7 @@ const projectFactory = (title, description, priority) => {
     priority,
     completed: false,
     id: `projID${randomID}`,
-    tasks: [taskFactory("test", "domani"), taskFactory("test2", "dopo domani")],
+    tasks: [],
   };
   const proto = {
     pushTask(task) {
