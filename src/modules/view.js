@@ -60,9 +60,17 @@ const view = (function () {
     descriptionContainer.appendChild(form);
   }
 
-  function editTitle(form) {}
+  function editTitle(form) {
+    const headerContainer = document.querySelector("#mainHeader");
+    headerContainer.innerHTML = "";
+    headerContainer.appendChild(form);
+  }
 
-  function editTask(form) {}
+  function editTask(obj) {
+    const taskContainer = document.querySelector(`#${obj.taskId}`);
+    taskContainer.innerHTML = "";
+    taskContainer.appendChild(obj.form);
+  }
 
   navBarButton.addEventListener("click", () => {
     nav.classList.toggle("navBarActive");
@@ -75,4 +83,6 @@ const view = (function () {
   pubsub.subscribe("todoDataChanged", render);
   pubsub.subscribe("currentProjectChanged", currentProjectChanged);
   pubsub.subscribe("requestDescriptionEdit", editDescription);
+  pubsub.subscribe("requestTitleEdit", editTitle);
+  pubsub.subscribe("requestTaskEdit", editTask);
 })();

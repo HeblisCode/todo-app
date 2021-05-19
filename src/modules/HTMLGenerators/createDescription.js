@@ -1,7 +1,7 @@
 import projectFactory from "../projectFactory";
 import pubsub from "../pubsub";
 
-function renderEditForm(project) {
+function createEditForm(project) {
   const form = document.createElement("form");
   const input = document.createElement("textarea");
   const submit = document.createElement("span");
@@ -54,7 +54,7 @@ function createDescriptionMain(project) {
     descriptionPar.innerText = project.description;
   }
   descriptionPar.addEventListener("click", () => {
-    pubsub.publish("requestDescriptionEdit", renderEditForm(project));
+    pubsub.publish("requestDescriptionEdit", createEditForm(project));
   });
 
   descriptionContainer.appendChild(descriptionTitle);
