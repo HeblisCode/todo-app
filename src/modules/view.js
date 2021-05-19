@@ -53,6 +53,17 @@ const view = (function () {
     nav.classList.toggle("navBarActive");
   }
 
+  function editDescription(form) {
+    const descriptionContainer = document.querySelector("#mainDescription");
+    const descriptionPar = descriptionContainer.querySelector("p");
+    descriptionPar.remove();
+    descriptionContainer.appendChild(form);
+  }
+
+  function editTitle(form) {}
+
+  function editTask(form) {}
+
   navBarButton.addEventListener("click", () => {
     nav.classList.toggle("navBarActive");
   });
@@ -63,4 +74,5 @@ const view = (function () {
 
   pubsub.subscribe("todoDataChanged", render);
   pubsub.subscribe("currentProjectChanged", currentProjectChanged);
+  pubsub.subscribe("requestDescriptionEdit", editDescription);
 })();

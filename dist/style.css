@@ -180,6 +180,7 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: fit-content(1rem) auto;
+  overflow-y: hidden;
 }
 @media (max-width: 767px) {
   main {
@@ -233,6 +234,9 @@ main {
   margin-top: 3rem;
 }
 #mainDescription p {
+  width: 100%;
+  word-wrap: break-word;
+  height: auto;
   font-size: 2rem;
   text-align: justify;
   padding: 2rem 4rem;

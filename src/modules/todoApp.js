@@ -30,6 +30,12 @@ const todo = (function () {
     pubsub.publish("todoDataChanged", projects);
   }
 
+  function editProject(obj) {
+    const index = findProjectIndex(obj.projId);
+    projects[index].edit(obj.title, obj.description, obj.priority);
+    pubsub.publish("todoDataChanged", projects);
+  }
+
   function addTask(obj) {
     const newTask = taskFactory(obj.name, obj.date);
     const projIndex = findProjectIndex(obj.id);
@@ -64,6 +70,7 @@ const todo = (function () {
   pubsub.subscribe("deleteTask", deleteTask);
   pubsub.subscribe("completeTask", completeTask);
   pubsub.subscribe("incompleteTask", incompleteTask);
+  pubsub.subscribe("editProject", editProject);
 
   return {
     addProject,
