@@ -69,7 +69,22 @@ const todo = (function () {
     pubsub.publish("todoDataChanged", projects);
   }
 
-  function restoreFromData(obj) {}
+  function restoreFromData(data) {
+    data.forEach((project) => {
+      const restoredObject = projectFactory(
+        project.title,
+        project.description,
+        project.priority
+      );
+      project.tasks.forEach((task) => {
+        const restoredTask = taskFactory(task.name, task.date);
+        if (task.isDone) restoredTask.done();
+        restoredObject.pushTask(restoredTask);
+      });
+      projects.push(restoredObject);
+    });
+    pubsub.publish("todoDataChanged", projects);
+  }
 
   pubsub.subscribeAll({
     addProject: addProject,
@@ -80,6 +95,7 @@ const todo = (function () {
     editProject: editProject,
     editTask: editTask,
     addTask: addTask,
+    init: restoreFromData,
   });
 })();
 

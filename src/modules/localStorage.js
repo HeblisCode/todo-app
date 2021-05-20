@@ -1,12 +1,13 @@
 import pubsub from "./pubsub";
 const storage = (function () {
   function set(data) {
-    localStorage.set(JSON.stringify(data));
+    localStorage.setItem("Heb.doAppProjects", JSON.stringify(data));
   }
-  function get(data) {
-    console.log(JSON.parse(localStorage.get(data)));
+
+  function get() {
+    return JSON.parse(localStorage.getItem("Heb.doAppProjects"));
   }
 
   pubsub.subscribe("todoDataChanged", set);
-  pubsub.subscribe("todoDataChanged", get);
+  pubsub.publish("init", get());
 })();
