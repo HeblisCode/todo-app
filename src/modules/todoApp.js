@@ -1,7 +1,6 @@
 import taskFactory from "./taskFactory";
 import projectFactory from "./projectFactory";
 import pubsub from "./pubsub";
-import createNavBarProject from "./HTMLGenerators/createNavBar";
 
 const todo = (function () {
   const projects = [];
@@ -72,18 +71,16 @@ const todo = (function () {
 
   function restoreFromData(obj) {}
 
-  pubsub.subscribe("addProject", addProject);
-  pubsub.subscribe("deleteProject", deleteProject);
-  pubsub.subscribe("deleteTask", deleteTask);
-  pubsub.subscribe("completeTask", completeTask);
-  pubsub.subscribe("incompleteTask", incompleteTask);
-  pubsub.subscribe("editProject", editProject);
-  pubsub.subscribe("editTask", editTask);
-  pubsub.subscribe("addTask", addTask);
-
-  return {
-    addProject,
-  };
+  pubsub.subscribeAll({
+    addProject: addProject,
+    deleteProject: deleteProject,
+    deleteTask: deleteTask,
+    completeTask: completeTask,
+    incompleteTask: incompleteTask,
+    editProject: editProject,
+    editTask: editTask,
+    addTask: addTask,
+  });
 })();
 
 export default todo;

@@ -1,4 +1,4 @@
-const HMTLHelper = (function () {
+const HTMLHelper = (function () {
   //obj = {type: eventListener}
   function createMaterialButton(figure, obj) {
     const button = document.createElement("span");
@@ -6,8 +6,6 @@ const HMTLHelper = (function () {
     button.innerText = figure;
     if (obj === undefined) return button;
     for (let key in obj) {
-      console.log(key);
-      console.log(obj[key]);
       button.addEventListener(key, obj[key]);
     }
     return button;
@@ -19,42 +17,20 @@ const HMTLHelper = (function () {
     });
   }
 
-  //obj = {attributeName: attributeValue}
-  function createInput(obj) {
-    const input = document.createElement("input");
-    for (let key in obj) {
-      input.setAttribute(key, obj[key]);
+  function create(type, attributes) {
+    const element = document.createElement(type);
+    if (attributes === undefined) return element;
+    for (let key in attributes) {
+      element.setAttribute(key, attributes[key]);
     }
-    return input;
-  }
-
-  function createParagraph(obj) {
-    const paragraph = document.createElement("p");
-    paragraph.id = obj.id;
-    paragraph.innerText = obj.text;
-    if (obj.class === undefined) return paragraph;
-    obj.class.forEach((element) => {
-      paragraph.classList.add(element);
-    });
-    return paragraph;
-  }
-
-  function createDiv(obj) {
-    const div = document.createElement("div");
-    div.id = obj.id;
-    if (obj.class === undefined) return div;
-    obj.class.forEach((element) => {
-      div.classList.add(element);
-    });
-    return div;
+    return element;
   }
 
   return {
     createMaterialButton,
     appendAll,
-    createInput,
-    createParagraph,
-    createDiv,
+    create,
   };
 })();
-export default HMTLHelper;
+
+export default HTMLHelper;

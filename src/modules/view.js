@@ -3,6 +3,7 @@ import createTaskMain from "./HTMLGenerators/createTask";
 import createDescriptionMain from "./HTMLGenerators/createDescription";
 import createHeaderMain from "./HTMLGenerators/createHeader";
 import pubsub from "./pubsub";
+import HTMLHelper from "./HTMLGenerators/HTMLHelper";
 
 const view = (function () {
   const nav = document.querySelector("nav");
@@ -39,12 +40,11 @@ const view = (function () {
   function renderMain(project) {
     if (!project) return;
     mainContainer.innerHTML = "";
-    const headerMain = createHeaderMain(project);
-    const descriptionMain = createDescriptionMain(project);
-    const taskMain = createTaskMain(project);
-    mainContainer.appendChild(headerMain);
-    mainContainer.appendChild(descriptionMain);
-    mainContainer.appendChild(taskMain);
+    HTMLHelper.appendAll(mainContainer, [
+      createHeaderMain(project),
+      createDescriptionMain(project),
+      createTaskMain(project),
+    ]);
   }
   function render(projects) {
     renderNavBar(projects);
@@ -93,9 +93,11 @@ const view = (function () {
   });
 
   //pubsub calls
-  pubsub.subscribe("todoDataChanged", render);
-  pubsub.subscribe("currentProjectChanged", currentProjectChanged);
-  pubsub.subscribe("requestDescriptionEdit", editDescription);
-  pubsub.subscribe("requestTitleEdit", editTitle);
-  pubsub.subscribe("requestTaskEdit", editTask);
+  pubsub.subscribeAll({
+    todoDataChanged: render,
+    currentProjectChanged: currentProjectChanged,
+    requestDescriptionEdit: editDescription,
+    requestTitleEdit: editTitle,
+    requestTaskEdit: editTask,
+  });
 })();

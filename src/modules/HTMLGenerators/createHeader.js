@@ -1,23 +1,30 @@
-import projectFactory from "../projectFactory";
 import pubsub from "../pubsub";
-import HMTLHelper from "./HTMLHelper";
+import HTMLHelper from "./HTMLHelper";
 
 function createEditForm(project) {
-  const form = document.createElement("form");
-  const input = document.createElement("input");
-  const submit = document.createElement("span");
-  const cancel = document.createElement("span");
-  const buttonContainer = document.createElement("div");
-  buttonContainer.id = "mainButtons";
+  const form = HTMLHelper.create("form", {
+    method: "dialog",
+  });
 
-  input.setAttribute("type", "text");
-  input.setAttribute("required", "");
-  input.setAttribute("name", "title");
-  input.setAttribute("value", project.title);
-  form.setAttribute("method", "dialog");
+  const input = HTMLHelper.create("input", {
+    type: "text",
+    required: "",
+    name: "title",
+    value: project.title,
+  });
 
-  submit.classList.add("material-icons");
-  cancel.classList.add("material-icons");
+  const submit = HTMLHelper.create("span", {
+    class: "material-icons",
+  });
+
+  const cancel = HTMLHelper.create("span", {
+    class: "material-icons",
+  });
+
+  const buttonContainer = HTMLHelper.create("div", {
+    id: "mainButtons",
+  });
+
   submit.innerText = "done";
   cancel.innerText = "close";
 
@@ -40,41 +47,45 @@ function createEditForm(project) {
     });
   });
 
-  HMTLHelper.appendAll(buttonContainer, [submit, cancel]);
-  HMTLHelper.appendAll(form, [input, buttonContainer]);
+  HTMLHelper.appendAll(buttonContainer, [submit, cancel]);
+  HTMLHelper.appendAll(form, [input, buttonContainer]);
 
   return form;
 }
 
 function createHeaderMain(project) {
-  const headerMain = document.createElement("div");
-  const headerTitle = document.createElement("h2");
-  const mainButtons = document.createElement("div");
-  const deleteButton = document.createElement("span");
-  const editButton = document.createElement("span");
+  const headerMain = HTMLHelper.create("div", {
+    id: "mainHeader",
+  });
 
-  headerMain.id = "mainHeader";
-  mainButtons.id = "mainButtons";
-  deleteButton.classList.add("material-icons");
-  editButton.classList.add("material-icons");
+  const headerTitle = HTMLHelper.create("h2");
+
+  const mainButtons = HTMLHelper.create("div", {
+    id: "mainButtons",
+  });
+
+  const editButton = HTMLHelper.createMaterialButton("edit", {
+    click: editListener,
+  });
+
+  const deleteButton = HTMLHelper.createMaterialButton("delete", {
+    click: deleteListener,
+  });
 
   headerTitle.innerText = project.title;
   deleteButton.innerText = "delete";
   editButton.innerText = "edit";
 
-  editButton.addEventListener("click", () => {
+  function editListener() {
     pubsub.publish("requestTitleEdit", createEditForm(project));
-  });
+  }
 
-  deleteButton.addEventListener("click", () => {
+  function deleteListener() {
     pubsub.publish("deleteProject", project.id);
-  });
+  }
 
-  mainButtons.appendChild(deleteButton);
-  mainButtons.appendChild(editButton);
-
-  headerMain.appendChild(headerTitle);
-  headerMain.appendChild(mainButtons);
+  HTMLHelper.appendAll(mainButtons, [deleteButton, editButton]);
+  HTMLHelper.appendAll(headerMain, [headerTitle, mainButtons]);
 
   return headerMain;
 }

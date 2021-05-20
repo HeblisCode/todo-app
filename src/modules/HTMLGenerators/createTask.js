@@ -1,29 +1,39 @@
 import projectFactory from "../projectFactory";
 import pubsub from "../pubsub";
-import HMTLHelper from "./HTMLHelper";
+import HTMLHelper from "./HTMLHelper";
 
 function createEditForm(project, task) {
-  const form = document.createElement("form");
-  form.setAttribute("method", "dialog");
+  const form = HTMLHelper.create("form", {
+    method: "dialog",
+  });
 
-  const buttonContainer = document.createElement("div");
-  buttonContainer.id = "taskButtons";
+  const buttonContainer = HTMLHelper.create("div", {
+    id: "taskButtons",
+  });
 
-  const input = HMTLHelper.createInput({
+  const submit = HTMLHelper.createMaterialButton("done", {
+    click: submitClick,
+  });
+
+  const cancel = HTMLHelper.createMaterialButton("close", {
+    click: cancelClick,
+  });
+
+  const input = HTMLHelper.create("input", {
     type: "text",
     required: "",
     name: "name",
     value: task.name,
   });
 
-  const date = HMTLHelper.createInput({
+  const date = HTMLHelper.create("input", {
     type: "date",
     required: "",
     name: "date",
     value: task.date,
   });
 
-  const submitClick = () => {
+  function submitClick() {
     if (!input.checkValidity() || !date.checkValidity()) return;
     pubsub.publish("editTask", {
       project: project,
@@ -31,36 +41,33 @@ function createEditForm(project, task) {
       name: input.value,
       date: date.value,
     });
-  };
+  }
 
-  const cancelClick = () => {
+  function cancelClick() {
     pubsub.publish("editTask", {
       project: project,
       taskId: task.id,
       name: task.name,
       date: task.date,
     });
-  };
+  }
 
-  const submit = HMTLHelper.createMaterialButton("done", {
-    click: submitClick,
-  });
-
-  const cancel = HMTLHelper.createMaterialButton("close", {
-    click: cancelClick,
-  });
-
-  HMTLHelper.appendAll(buttonContainer, [submit, cancel]);
-  HMTLHelper.appendAll(form, [input, date, buttonContainer]);
+  HTMLHelper.appendAll(buttonContainer, [submit, cancel]);
+  HTMLHelper.appendAll(form, [input, date, buttonContainer]);
 
   return form;
 }
 
 function createTask(project, task) {
-  const taskContainer = HMTLHelper.createDiv({ class: ["task"], id: task.id });
-  const taskContent = HMTLHelper.createDiv({ class: ["taskContent"] });
+  const taskContainer = HTMLHelper.create("div", {
+    class: "task",
+    id: task.id,
+  });
+  const taskContent = HTMLHelper.create("div", {
+    class: "taskContent",
+  });
 
-  let completeIcon;
+  let completeButton;
 
   if (task.isDone) {
     taskContainer.classList.add("taskCompleted");
@@ -70,7 +77,7 @@ function createTask(project, task) {
         taskId: task.id,
       });
     };
-    completeIcon = HMTLHelper.createMaterialButton("close", {
+    completeButton = HTMLHelper.createMaterialButton("close", {
       click: incompleteTask,
     });
   } else {
@@ -81,28 +88,28 @@ function createTask(project, task) {
         taskId: task.id,
       });
     };
-    completeIcon = HMTLHelper.createMaterialButton("done", {
+    completeButton = HTMLHelper.createMaterialButton("done", {
       click: completeTask,
     });
   }
 
-  const title = HMTLHelper.createParagraph({
-    class: ["taskTitle"],
-    text: task.name,
-  });
-
-  const date = HMTLHelper.createParagraph({
-    class: ["taskDate"],
-    text: task.date,
-  });
-
-  const deleteTaskListener = () => {
-    pubsub.publish("deleteTask", { project: project, id: task.id });
-  };
-
-  const deleteIcon = HMTLHelper.createMaterialButton("delete", {
+  const deleteButton = HTMLHelper.createMaterialButton("delete", {
     click: deleteTaskListener,
   });
+
+  const title = HTMLHelper.create("p", {
+    class: "taskTitle",
+  });
+  title.innerText = task.name;
+
+  const date = HTMLHelper.create("p", {
+    class: "taskDate",
+  });
+  date.innerText = task.date;
+
+  function deleteTaskListener() {
+    pubsub.publish("deleteTask", { project: project, id: task.id });
+  }
 
   taskContent.addEventListener("click", () => {
     pubsub.publish("requestTaskEdit", {
@@ -111,24 +118,32 @@ function createTask(project, task) {
     });
   });
 
-  HMTLHelper.appendAll(taskContent, [title, date]);
-  HMTLHelper.appendAll(taskContainer, [completeIcon, taskContent, deleteIcon]);
+  HTMLHelper.appendAll(taskContent, [title, date]);
+  HTMLHelper.appendAll(taskContainer, [
+    completeButton,
+    taskContent,
+    deleteButton,
+  ]);
   return taskContainer;
 }
 
 function createTaskMain(project) {
-  const taskMain = document.createElement("div");
+  const taskMain = HTMLHelper.create("div", {
+    id: "mainTasks",
+  });
+
   const taskTitle = document.createElement("h3");
-  const tasksContainer = document.createElement("div");
-  const addButton = HMTLHelper.createMaterialButton("add", { click: addTask });
 
-  taskMain.id = "mainTasks";
+  const tasksContainer = HTMLHelper.create("div", {
+    id: "tasksContainer",
+  });
+
+  const addButton = HTMLHelper.createMaterialButton("add", {
+    click: addTask,
+  });
+
   taskTitle.innerText = "Tasks";
-  tasksContainer.id = "tasksContainer";
-  addButton.innerHTML = "add";
-  addButton.classList.add("material-icons");
 
-  tasksContainer.innerHTML = "";
   project.tasks.forEach((task) => {
     tasksContainer.appendChild(createTask(project, task));
   });
@@ -138,7 +153,7 @@ function createTaskMain(project) {
   }
 
   tasksContainer.appendChild(addButton);
-  HMTLHelper.appendAll(taskMain, [taskTitle, tasksContainer]);
+  HTMLHelper.appendAll(taskMain, [taskTitle, tasksContainer]);
 
   return taskMain;
 }

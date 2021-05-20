@@ -1,55 +1,61 @@
-import projectFactory from "../projectFactory";
 import pubsub from "../pubsub";
-import HMTLHelper from "./HTMLHelper";
+import HTMLHelper from "./HTMLHelper";
 
 function createEditForm(project) {
-  const form = document.createElement("form");
-  const input = document.createElement("textarea");
-  const submit = document.createElement("span");
-  const cancel = document.createElement("span");
-  const buttonContainer = document.createElement("div");
-  buttonContainer.id = "descButtons";
+  const form = HTMLHelper.create("form", {
+    method: "dialog",
+  });
 
-  input.setAttribute("type", "text");
+  const input = HTMLHelper.create("textarea", {
+    placeholder: "Write your description here!",
+  });
   input.innerText = project.description;
-  form.setAttribute("method", "dialog");
 
-  submit.classList.add("material-icons");
-  cancel.classList.add("material-icons");
-  submit.innerText = "done";
-  cancel.innerText = "close";
+  const submit = HTMLHelper.createMaterialButton("done", {
+    click: submitClick,
+  });
 
-  submit.addEventListener("click", () => {
+  const cancel = HTMLHelper.createMaterialButton("close", {
+    click: cancelClick,
+  });
+
+  const buttonContainer = HTMLHelper.create("div", {
+    id: "descButtons",
+  });
+
+  function submitClick() {
     pubsub.publish("editProject", {
       projId: project.id,
       title: project.title,
       description: input.value,
       priority: project.value,
     });
-  });
+  }
 
-  cancel.addEventListener("click", () => {
+  function cancelClick() {
     pubsub.publish("editProject", {
       projId: project.id,
       title: project.title,
       description: project.description,
       priority: project.value,
     });
-  });
+  }
 
-  HMTLHelper.appendAll(buttonContainer, [submit, cancel]);
-  HMTLHelper.appendAll(form, [input, buttonContainer]);
+  HTMLHelper.appendAll(buttonContainer, [submit, cancel]);
+  HTMLHelper.appendAll(form, [input, buttonContainer]);
 
   return form;
 }
 
 function createDescriptionMain(project) {
-  const descriptionContainer = document.createElement("div");
-  const descriptionTitle = document.createElement("h3");
-  const descriptionPar = document.createElement("p");
+  const descriptionContainer = HTMLHelper.create("div", {
+    id: "mainDescription",
+  });
 
-  descriptionContainer.id = "mainDescription";
+  const descriptionTitle = document.createElement("h3");
   descriptionTitle.innerText = "Description";
+
+  const descriptionPar = document.createElement("p");
   if (project.description === "") {
     descriptionPar.innerText = "Write your description here!";
   } else {
@@ -59,8 +65,10 @@ function createDescriptionMain(project) {
     pubsub.publish("requestDescriptionEdit", createEditForm(project));
   });
 
-  descriptionContainer.appendChild(descriptionTitle);
-  descriptionContainer.appendChild(descriptionPar);
+  HTMLHelper.appendAll(descriptionContainer, [
+    descriptionTitle,
+    descriptionPar,
+  ]);
 
   return descriptionContainer;
 }

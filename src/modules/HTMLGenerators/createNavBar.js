@@ -1,4 +1,5 @@
 import pubsub from "../pubsub";
+import HTMLHelper from "./HTMLHelper";
 
 function removeActiveClass() {
   const activeProject = document.querySelector(".projectNavActive");
@@ -7,34 +8,37 @@ function removeActiveClass() {
 }
 
 function createNavBarProject(project, currentProject) {
-  const projectContainer = document.createElement("div");
-  const title = document.createElement("p");
-  const deleteIcon = document.createElement("span");
-
-  projectContainer.classList.add("projectNav");
-  title.classList.add("projectNavTitle");
-  deleteIcon.classList.add("material-icons");
-
-  deleteIcon.addEventListener("click", () => {
-    pubsub.publish("deleteProject", project.id);
+  const projectContainer = HTMLHelper.create("div", {
+    id: project.id,
+    class: "projectNav",
   });
+
+  const title = HTMLHelper.create("p", {
+    class: "projectNavTitle",
+  });
+
+  const deleteButton = HTMLHelper.createMaterialButton("delete", {
+    click: deleteButtonClick,
+  });
+
+  function deleteButtonClick() {
+    pubsub.publish("deleteProject", project.id);
+  }
+
+  function projectClick() {
+    removeActiveClass();
+    projectContainer.classList.add("projectNavActive");
+    pubsub.publish("currentProjectChanged", project);
+  }
 
   if (!!currentProject && currentProject.id === project.id) {
     projectContainer.classList.add("projectNavActive");
   }
-
-  projectContainer.addEventListener("click", () => {
-    removeActiveClass();
-    projectContainer.classList.add("projectNavActive");
-    pubsub.publish("currentProjectChanged", project);
-  });
+  projectContainer.addEventListener("click", projectClick);
 
   title.innerText = project.title;
-  deleteIcon.innerText = "delete";
 
-  projectContainer.id = project.id;
-  projectContainer.appendChild(title);
-  projectContainer.appendChild(deleteIcon);
+  HTMLHelper.appendAll(projectContainer, [title, deleteButton]);
 
   return projectContainer;
 }

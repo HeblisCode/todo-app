@@ -1,4 +1,3 @@
-import taskFactory from "./taskFactory";
 const projectFactory = (title, description, priority) => {
   const MAX_ID_NUMBER = 999999;
   const randomID = Math.floor(Math.random() * MAX_ID_NUMBER);
@@ -6,7 +5,6 @@ const projectFactory = (title, description, priority) => {
     title,
     description,
     priority,
-    completed: false,
     id: `projID${randomID}`,
     tasks: [],
   };
@@ -22,17 +20,6 @@ const projectFactory = (title, description, priority) => {
       this.title = title;
       this.description = description;
       this.priority = priority;
-    },
-    getTasks() {
-      return this.tasks;
-    },
-    checkCompleted() {
-      const completedTasks = tasks.sort((task) => {
-        return task.isDone;
-      });
-      if (tasks.lenght === completedTasks.lenght) {
-        this.completed = true;
-      }
     },
   };
   return Object.assign(Object.create(proto), project);

@@ -1,4 +1,3 @@
-import pubsub from "./pubsub";
 const taskFactory = (name, date) => {
   const MAX_ID_NUMBER = 999999;
   const randomID = Math.floor(Math.random() * MAX_ID_NUMBER);

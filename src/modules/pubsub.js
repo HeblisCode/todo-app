@@ -24,6 +24,12 @@ const pubsub = (function () {
     _events[eventName].push(handler);
   }
 
+  function subscribeAll(obj) {
+    for (let key in obj) {
+      subscribe(key, obj[key]);
+    }
+  }
+
   function unsubscribe(eventName, handler) {
     if (!_checkEventName(eventName) || !_checkHandler(eventName, handler)) {
       return;
@@ -43,6 +49,7 @@ const pubsub = (function () {
 
   return {
     subscribe,
+    subscribeAll,
     unsubscribe,
     publish,
     debug,
