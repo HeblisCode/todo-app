@@ -1,11 +1,14 @@
 import projectFactory from "../projectFactory";
 import pubsub from "../pubsub";
+import HMTLHelper from "./HTMLHelper";
 
 function createEditForm(project) {
   const form = document.createElement("form");
   const input = document.createElement("input");
   const submit = document.createElement("span");
   const cancel = document.createElement("span");
+  const buttonContainer = document.createElement("div");
+  buttonContainer.id = "mainButtons";
 
   input.setAttribute("type", "text");
   input.setAttribute("required", "");
@@ -16,7 +19,7 @@ function createEditForm(project) {
   submit.classList.add("material-icons");
   cancel.classList.add("material-icons");
   submit.innerText = "done";
-  cancel.innerText = "cancel";
+  cancel.innerText = "close";
 
   submit.addEventListener("click", () => {
     if (!input.checkValidity()) return;
@@ -37,9 +40,8 @@ function createEditForm(project) {
     });
   });
 
-  form.appendChild(input);
-  form.appendChild(submit);
-  form.appendChild(cancel);
+  HMTLHelper.appendAll(buttonContainer, [submit, cancel]);
+  HMTLHelper.appendAll(form, [input, buttonContainer]);
 
   return form;
 }

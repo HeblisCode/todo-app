@@ -22,7 +22,6 @@ const pubsub = (function () {
       _events[eventName] = [];
     }
     _events[eventName].push(handler);
-    console.log(_events);
   }
 
   function unsubscribe(eventName, handler) {
@@ -31,7 +30,6 @@ const pubsub = (function () {
     }
     const handlerIndex = _events[eventName].indexOf(handler);
     _events[eventName].splice(handlerIndex, 1);
-    console.log(_events);
   }
 
   function publish(eventName, arg) {
@@ -39,10 +37,15 @@ const pubsub = (function () {
     _events[eventName].forEach((element) => element(arg));
   }
 
+  function debug() {
+    console.table(_events);
+  }
+
   return {
     subscribe,
     unsubscribe,
     publish,
+    debug,
   };
 })();
 

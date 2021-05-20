@@ -6,6 +6,9 @@ function createEditForm(project, task) {
   const form = document.createElement("form");
   form.setAttribute("method", "dialog");
 
+  const buttonContainer = document.createElement("div");
+  buttonContainer.id = "taskButtons";
+
   const input = HMTLHelper.createInput({
     type: "text",
     required: "",
@@ -43,11 +46,12 @@ function createEditForm(project, task) {
     click: submitClick,
   });
 
-  const cancel = HMTLHelper.createMaterialButton("cancel", {
+  const cancel = HMTLHelper.createMaterialButton("close", {
     click: cancelClick,
   });
 
-  HMTLHelper.appendAll(form, [input, date, submit, cancel]);
+  HMTLHelper.appendAll(buttonContainer, [submit, cancel]);
+  HMTLHelper.appendAll(form, [input, date, buttonContainer]);
 
   return form;
 }
@@ -124,7 +128,6 @@ function createTaskMain(project) {
   addButton.innerHTML = "add";
   addButton.classList.add("material-icons");
 
-  tasksContainer.classList.add("taskContainer");
   tasksContainer.innerHTML = "";
   project.tasks.forEach((task) => {
     tasksContainer.appendChild(createTask(project, task));
@@ -134,7 +137,8 @@ function createTaskMain(project) {
     pubsub.publish("addTask", project);
   }
 
-  HMTLHelper.appendAll(taskMain, [taskTitle, tasksContainer, addButton]);
+  tasksContainer.appendChild(addButton);
+  HMTLHelper.appendAll(taskMain, [taskTitle, tasksContainer]);
 
   return taskMain;
 }
