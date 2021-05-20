@@ -314,7 +314,7 @@ main {
   flex-direction: column;
   align-items: center;
 }
-#tasksContainer > span {
+#tasks Container > span {
   background-color: var(--accColor);
   color: var(--mainColor);
   height: 4rem;
