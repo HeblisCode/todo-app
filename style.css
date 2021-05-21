@@ -11,6 +11,7 @@
   --secDarkColor: #e2e2e2;
   --accColor: #3da100;
   --textColor: black;
+  --mediaWidth: 1284px;
 }
 html {
   height: 100%;
@@ -19,17 +20,40 @@ html {
 }
 body {
   display: grid;
-  grid-template-columns: minmax(50rem, 1fr) 4fr;
+  grid-template-columns: minmax(40rem, 50rem) minmax(950px, 4fr);
   grid-template-rows: 14.8rem 1fr 3.4rem;
   height: 100%;
   width: 100%;
   font-family: "PT Mono", monospace;
 }
-@media (max-width: 767px) {
+@media (max-width: 1284px) {
   body {
     grid-template-columns: 1fr;
     grid-template-rows: 60px 1fr 30px;
   }
+}
+/*CLASSES*****************************************************************************/
+.material-button {
+  background-color: var(--accColor);
+  color: var(--mainColor);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 2rem;
+  opacity: 1;
+}
+.material-button:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+.flexColumn {
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 /*NAV BAR STYLING*********************************************************************/
 header {
@@ -48,7 +72,7 @@ header > h1 {
 header > button {
   display: none;
 }
-@media (max-width: 767px) {
+@media (max-width: 1284px) {
   header > button {
     display: block;
   }
@@ -57,9 +81,12 @@ header > button {
 nav {
   background-color: var(--secColor);
   padding: 3rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   overflow-y: scroll;
 }
-@media (max-width: 767px) {
+@media (max-width: 1284px) {
   nav {
     display: flex;
     flex-direction: column;
@@ -77,6 +104,9 @@ nav {
     transform: translate(0, 0);
   }
 }
+#navProjectsContainer {
+  width: 100%;
+}
 nav > h2 {
   font-size: 4rem;
   text-align: center;
@@ -84,7 +114,7 @@ nav > h2 {
 .projectNav {
   background-color: var(--secDarkColor);
   height: 7rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
   border-radius: 3.5rem;
   display: flex;
   align-items: center;
@@ -92,41 +122,27 @@ nav > h2 {
   padding: 0 3rem;
   color: var(--textColor);
 }
-.projectNav > p,
-.projectNav > span {
+.projectNav > p {
   font-size: 2.4rem;
+}
+.projectNav > .material-button {
+  padding: 0;
+  background-color: transparent;
+  color: black;
+}
+.projectNav:hover {
+  opacity: 0.7;
+  cursor: pointer;
 }
 .projectNavActive {
   background-color: var(--accColor);
   color: white;
 }
-.projectNav:hover {
-  -webkit-box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
-  transform: scale(1.01);
-  cursor: pointer;
-}
-.projectNav > span:hover {
-  transform: scale(1.3);
+.projectNavActive > .material-button {
+  color: white;
 }
 #addProject {
-  background-color: var(--accColor);
-  color: var(--mainColor);
-  height: 4rem;
-  width: 4rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  margin: auto;
-  margin-top: 3rem;
-}
-#addProject:hover {
-  cursor: pointer;
-  -webkit-box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
-  transform: scale(1.2);
+  margin-top: 2rem;
 }
 nav > form {
   background-color: var(--accColor);
@@ -182,7 +198,7 @@ main {
   grid-template-rows: fit-content(1rem) auto;
   overflow-y: hidden;
 }
-@media (max-width: 767px) {
+@media (max-width: 1284px) {
   main {
     display: flex;
     flex-direction: column;
@@ -204,22 +220,7 @@ main {
   display: flex;
 }
 #mainButtons > span {
-  background-color: var(--accColor);
-  color: var(--mainColor);
-  height: 4rem;
-  width: 4rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
   margin-left: 1.5rem;
-}
-#mainButtons > span:hover {
-  cursor: pointer;
-  -webkit-box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 0px 21px 1px rgba(0, 0, 0, 0.3);
-  transform: scale(1.2);
 }
 #mainHeader > form {
   height: 100%;
@@ -282,18 +283,8 @@ main {
   justify-content: center;
   margin-top: 2rem;
 }
-#descButtons > span {
-  background-color: var(--accColor);
-  color: var(--mainColor);
-  height: 4rem;
-  width: 4rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  margin-left: 1.5rem;
-  cursor: pointer;
+#descButtons > .material-button {
+  margin: 0 0.6rem;
 }
 /*****************************MAIN TASK CONTAINER*********************************/
 #mainTasks {
@@ -314,23 +305,13 @@ main {
   flex-direction: column;
   align-items: center;
 }
-#tasks Container > span {
-  background-color: var(--accColor);
-  color: var(--mainColor);
-  height: 4rem;
-  width: 4rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  cursor: pointer;
+#tasksContainer > .material-button {
   margin-top: 2rem;
 }
 .task {
   margin-top: 2rem;
   background-color: var(--secColor);
-  height: 5rem;
+  min-height: 5rem;
   font-size: 2rem;
   border-radius: 2.5rem;
   width: 100%;
@@ -339,8 +320,9 @@ main {
   justify-content: space-between;
   padding: 0 2rem;
 }
-.task > span {
-  cursor: pointer;
+.task .material-button {
+  background-color: transparent;
+  color: black;
 }
 .taskContent {
   flex-grow: 1;
@@ -351,6 +333,9 @@ main {
 }
 .taskCompleted {
   background-color: var(--accColor);
+  color: var(--mainColor);
+}
+.taskCompleted .material-button {
   color: var(--mainColor);
 }
 .taskCompleted > .taskContent {
@@ -375,12 +360,7 @@ main {
   display: flex;
 }
 #taskButtons > span {
-  border-radius: 50%;
-  background-color: var(--accColor);
-  padding: 0.3rem;
   margin-left: 1rem;
-  font-size: 2.5rem;
-  cursor: pointer;
 }
 .taskCompleted > form > #taskButtons > span {
   background-color: white;
