@@ -1,4 +1,4 @@
-import projectFactory from "../projectFactory";
+import { format, formatDistance } from "date-fns";
 import pubsub from "../pubsub";
 import HTMLHelper from "./HTMLHelper";
 
@@ -105,7 +105,9 @@ function createTask(project, task) {
   const date = HTMLHelper.create("p", {
     class: "taskDate",
   });
-  date.innerText = task.date;
+  date.innerText = formatDistance(new Date(task.date), new Date(), {
+    addSuffix: true,
+  });
 
   function deleteTaskListener() {
     pubsub.publish("deleteTask", { project: project, id: task.id });

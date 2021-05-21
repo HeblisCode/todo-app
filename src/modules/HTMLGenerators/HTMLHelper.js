@@ -3,6 +3,7 @@ const HTMLHelper = (function () {
   function createMaterialButton(figure, obj) {
     const button = document.createElement("span");
     button.classList.add("material-icons");
+    button.classList.add("material-button");
     button.innerText = figure;
     if (obj === undefined) return button;
     for (let key in obj) {

@@ -1,6 +1,7 @@
 import taskFactory from "./taskFactory";
 import projectFactory from "./projectFactory";
 import pubsub from "./pubsub";
+import { format, compareAsc } from "date-fns";
 
 const todo = (function () {
   const projects = [];
@@ -37,7 +38,9 @@ const todo = (function () {
 
   function addTask(project) {
     const projIndex = findProjectIndex(project.id);
-    projects[projIndex].pushTask(taskFactory("Default name", "00/00/00"));
+    projects[projIndex].pushTask(
+      taskFactory("Default name", format(new Date(), "MM/dd/yyyy"))
+    );
     pubsub.publish("todoDataChanged", projects);
   }
 

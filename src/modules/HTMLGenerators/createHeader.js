@@ -13,22 +13,19 @@ function createEditForm(project) {
     value: project.title,
   });
 
-  const submit = HTMLHelper.create("span", {
-    class: "material-icons",
+  const submit = HTMLHelper.createMaterialButton("done", {
+    click: submitClick,
   });
 
-  const cancel = HTMLHelper.create("span", {
-    class: "material-icons",
+  const cancel = HTMLHelper.createMaterialButton("close", {
+    click: cancelClick,
   });
 
   const buttonContainer = HTMLHelper.create("div", {
     id: "mainButtons",
   });
 
-  submit.innerText = "done";
-  cancel.innerText = "close";
-
-  submit.addEventListener("click", () => {
+  function submitClick() {
     if (!input.checkValidity()) return;
     pubsub.publish("editProject", {
       projId: project.id,
@@ -36,16 +33,16 @@ function createEditForm(project) {
       description: project.value,
       priority: project.value,
     });
-  });
+  }
 
-  cancel.addEventListener("click", () => {
+  function cancelClick() {
     pubsub.publish("editProject", {
       projId: project.id,
       title: project.title,
       description: project.description,
       priority: project.value,
     });
-  });
+  }
 
   HTMLHelper.appendAll(buttonContainer, [submit, cancel]);
   HTMLHelper.appendAll(form, [input, buttonContainer]);
@@ -84,7 +81,7 @@ function createHeaderMain(project) {
     pubsub.publish("deleteProject", project.id);
   }
 
-  HTMLHelper.appendAll(mainButtons, [deleteButton, editButton]);
+  HTMLHelper.appendAll(mainButtons, [editButton, deleteButton]);
   HTMLHelper.appendAll(headerMain, [headerTitle, mainButtons]);
 
   return headerMain;
