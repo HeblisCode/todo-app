@@ -39,7 +39,7 @@ const todo = (function () {
   function addTask(project) {
     const projIndex = findProjectIndex(project.id);
     projects[projIndex].pushTask(
-      taskFactory("Default name", format(new Date(), "MM/dd/yyyy"))
+      taskFactory("Click to edit!", format(new Date(), "MM/dd/yyyy"))
     );
     pubsub.publish("todoDataChanged", projects);
   }

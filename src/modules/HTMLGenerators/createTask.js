@@ -24,6 +24,7 @@ function createEditForm(project, task) {
     required: "",
     name: "name",
     value: task.name,
+    maxlength: "25",
   });
 
   const date = HTMLHelper.create("input", {

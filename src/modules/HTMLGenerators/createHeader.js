@@ -11,6 +11,7 @@ function createEditForm(project) {
     required: "",
     name: "title",
     value: project.title,
+    maxlength: "30",
   });
 
   const submit = HTMLHelper.createMaterialButton("done", {
@@ -78,6 +79,7 @@ function createHeaderMain(project) {
   }
 
   function deleteListener() {
+    pubsub.publish("currentProjectChanged", null);
     pubsub.publish("deleteProject", project.id);
   }
 

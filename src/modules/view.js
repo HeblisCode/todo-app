@@ -25,6 +25,7 @@ const view = (function () {
   };
   function currentProjectChanged(project) {
     currentProject.set(project);
+    console.log(currentProject.get());
     renderMain(project);
     nav.classList.toggle("navBarActive");
   }
@@ -38,8 +39,8 @@ const view = (function () {
     });
   }
   function renderMain(project) {
-    if (!project) return;
     mainContainer.innerHTML = "";
+    if (!project) return;
     HTMLHelper.appendAll(mainContainer, [
       createHeaderMain(project),
       createDescriptionMain(project),
@@ -75,6 +76,7 @@ const view = (function () {
   });
   addProjectButton.addEventListener("click", () => {
     projectForm.classList.add("formActive");
+    addProjectButton.style.display = "none";
   });
 
   //add project form
@@ -86,10 +88,14 @@ const view = (function () {
     pubsub.publish("addProject", input.value);
     projectForm.reset();
     projectForm.classList.remove("formActive");
+    addProjectButton.style.display = "block";
   });
 
-  cancel.addEventListener("click", () => {
+  cancel.addEventListener("click", (e) => {
+    e.preventDefault();
+    projectForm.reset();
     projectForm.classList.remove("formActive");
+    addProjectButton.style.display = "block";
   });
 
   //pubsub calls
